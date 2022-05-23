@@ -1,0 +1,165 @@
+services:
+  db:
+      image: mysql
+      container_name: db
+      command: --default-authentication-plugin=mysql_native_password
+      environment:
+        MYSQL_DATABASE: 'backempresa'
+        MYSQL_ROOT_PASSWORD: root
+
+  db2:
+    image: mysql
+    container_name: db2
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: 'backweb'
+      MYSQL_ROOT_PASSWORD: root
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin_backempresa
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - "8081:80"
+      
+  phpmyadmin2:
+    image: phpmyadmin
+    container_name: phpmyadmin_backweb
+    links:
+      - db2
+    environment:
+      PMA_HOST: db2
+      PMA_PORT: 3306
+    ports:
+      - "8082:80"
+
+  eureka:
+    image: davidevcueto/eureka:v1
+    container_name: eureka
+    ports:
+    - "8761:8761"
+    
+  gateway:
+    image: davidevcueto/gateway:v1
+    container_name: gateway
+    ports:
+      - "8083:8083"
+    links:
+      - "eureka"
+    depends_on:
+      - eureka
+    environment:
+      eureka.client.service-url.defaultZone: http://eureka:8761/eureka
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      
+  init-kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - kafka
+    entrypoint: [ '/bin/sh', '-c' ]
+    command: |
+      "
+      # blocks until kafka is reachable
+      kafka-topics --bootstrap-server kafka:29092 --list
+      echo -e 'Creating kafka topics'
+      kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic mytopic_1 --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic mytopic_2 --replication-factor 1 --partitions 1
+      echo -e 'Successfully created the following topics:'
+      kafka-topics --bootstrap-server kafka:29092 --list
+      "
+      
+  BackEmpresa:    
+    image: davidevcueto/backempresa:latest
+    container_name: backempresa
+
+    environment:
+      - spring.datasource.url=jdbc:mysql://db:3306/backempresa
+      - spring.kafka.bootstrap-servers=kafka:29092
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
+      - message.topic.name=booking
+      - message.topic.nameReceived=bookingReceived
+      - message.group.name=bookingGroup
+      - message.group.nameReceived=bookingGroupReceived
+      - server.port=8085
+    
+    ports:
+      - '8085:8085'
+      
+    depends_on:
+      - db
+      - kafka
+      - eureka
+      - gateway
+
+  BackWeb:    
+    image: davidevcueto/backweb:v2
+    container_name: backweb
+
+    environment:
+      - spring.datasource.url=jdbc:mysql://db2:3306/backweb
+      - spring.kafka.bootstrap-servers=kafka:29092
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
+      - message.topic.name=booking
+      - message.topic.nameReceived=bookingReceived
+      - message.group.name=bookingGroup
+      - message.group.nameReceived=bookingGroupReceived
+      - server.port=8086
+    
+    ports:
+      - '8086:8086'
+      
+    depends_on:
+      - db2
+      - kafka
+      - eureka
+      - gateway
+
+
+  BackWeb2:    
+    image: davidevcueto/backweb:v2
+    container_name: backweb2
+
+    environment:
+      - spring.datasource.url=jdbc:mysql://db2:3306/backweb
+      - spring.kafka.bootstrap-servers=kafka:29092
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
+      - message.topic.name=booking
+      - message.topic.nameReceived=bookingReceived
+      - message.group.name=bookingGroup
+      - message.group.nameReceived=bookingGroupReceived
+      - server.port=8087
+    
+    ports:
+      - '8087:8087'
+      
+    depends_on:
+      - db2
+      - kafka
+      - eureka
+      - gateway  

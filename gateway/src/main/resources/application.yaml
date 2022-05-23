@@ -1,0 +1,26 @@
+server:
+  port: 8083
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: Gateway
+    hostname: localhost
+
+spring:
+  application:
+    name: Gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: BackWeb
+          uri: lb://BackWeb
+          predicates:
+            - Path=/api/web/**

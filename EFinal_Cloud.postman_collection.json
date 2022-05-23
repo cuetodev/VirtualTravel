@@ -1,0 +1,481 @@
+{
+	"info": {
+		"_postman_id": "804d1f43-a3ee-4c41-b4a2-bfc3cdc1a8fc",
+		"name": "EFinal_Cloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20364250"
+	},
+	"item": [
+		{
+			"name": "BackEmpresa",
+			"item": [
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "E - Obtener Token",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "email",
+										"value": "user@user.es",
+										"description": "Admin email: admin@admin.es",
+										"type": "text"
+									},
+									{
+										"key": "password",
+										"value": "user",
+										"description": "Admin pass: admin",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8085/api/v0/token",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v0",
+										"token"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Reservas",
+					"item": [
+						{
+							"name": "E - Crear reserva",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoidXNlckB1c2VyLmVzIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY1MzI4NzAwMCwiZXhwIjoxNjUzMjg4ODAwfQ.UthJMX-E1ndIueS2UL2N6AinbrcRcwpopBDMQpOZR8sZ1ta0mcCBwRKMX_3YnKxWMU-zFsgKKKgNDpbR9WGKOA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"city\": \"Valencia\",\r\n    \"name\": \"David\",\r\n    \"surname\": \"Cueto\",\r\n    \"phone\": \"123456789\",\r\n    \"email\": \"davidcueto.dev@gmail.com\",\r\n    \"date\": \"2022-05-22\",\r\n    \"hour\": 20\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8085/api/v0/booking",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v0",
+										"booking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "E - Ver reservas con condiciones",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoidXNlckB1c2VyLmVzIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY1MzI4NzAwMCwiZXhwIjoxNjUzMjg4ODAwfQ.UthJMX-E1ndIueS2UL2N6AinbrcRcwpopBDMQpOZR8sZ1ta0mcCBwRKMX_3YnKxWMU-zFsgKKKgNDpbR9WGKOA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8085/api/v0/booking/Valencia?lowerDate=2022-05-10",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v0",
+										"booking",
+										"Valencia"
+									],
+									"query": [
+										{
+											"key": "lowerDate",
+											"value": "2022-05-10",
+											"description": "Muestra los autobuses que están por encima de esta fecha"
+										},
+										{
+											"key": "upperDate",
+											"value": "2022-12-20",
+											"description": "Muestra los autobuses que están por debajo de esta fecha",
+											"disabled": true
+										},
+										{
+											"key": "lowerHour",
+											"value": "8",
+											"description": "Muestra los autobuses que están por encima de esta hora",
+											"disabled": true
+										},
+										{
+											"key": "upperHour",
+											"value": "20",
+											"description": "Muestra los autobuses que están por debajo de esta hora",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Autobuses",
+					"item": [
+						{
+							"name": "E - Ver autobuses disponibles según parámetros de fecha y hora",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoidXNlckB1c2VyLmVzIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY1MzI4NzAwMCwiZXhwIjoxNjUzMjg4ODAwfQ.UthJMX-E1ndIueS2UL2N6AinbrcRcwpopBDMQpOZR8sZ1ta0mcCBwRKMX_3YnKxWMU-zFsgKKKgNDpbR9WGKOA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8085/api/v0/bus/available/Valencia?lowerDate=2022-04-01",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v0",
+										"bus",
+										"available",
+										"Valencia"
+									],
+									"query": [
+										{
+											"key": "lowerDate",
+											"value": "2022-04-01",
+											"description": "Muestra los autobuses que están por encima de esta fecha"
+										},
+										{
+											"key": "upperDate",
+											"value": "2022-09-01",
+											"description": "Muestra los autobuses que están por debajo de esta fecha",
+											"disabled": true
+										},
+										{
+											"key": "lowerHour",
+											"value": "18",
+											"description": "Muestra los autobuses que están por encima de esta hora",
+											"disabled": true
+										},
+										{
+											"key": "upperHour",
+											"value": "18",
+											"description": "Muestra los autobuses que están por debajo de esta hora",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Correos",
+					"item": [
+						{
+							"name": "E - Obtener correos mediante parámetros",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoidXNlckB1c2VyLmVzIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY1MzI4NzAwMCwiZXhwIjoxNjUzMjg4ODAwfQ.UthJMX-E1ndIueS2UL2N6AinbrcRcwpopBDMQpOZR8sZ1ta0mcCBwRKMX_3YnKxWMU-zFsgKKKgNDpbR9WGKOA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8085/api/v0/mails?lowerDate=2022-05-10&upperDate=2022-09-20",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v0",
+										"mails"
+									],
+									"query": [
+										{
+											"key": "city",
+											"value": "Valencia",
+											"disabled": true
+										},
+										{
+											"key": "lowerDate",
+											"value": "2022-05-10"
+										},
+										{
+											"key": "upperDate",
+											"value": "2022-09-20"
+										},
+										{
+											"key": "lowerHour",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "upperHour",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "E - Reenviar un correo",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoidXNlckB1c2VyLmVzIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY1MzI4NzAwMCwiZXhwIjoxNjUzMjg4ODAwfQ.UthJMX-E1ndIueS2UL2N6AinbrcRcwpopBDMQpOZR8sZ1ta0mcCBwRKMX_3YnKxWMU-zFsgKKKgNDpbR9WGKOA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"city\": \"Valencia\",\r\n    \"email\": \"davidcueto.dev@gmail.com\",\r\n    \"date\": \"2022-05-22\",\r\n    \"hour\": 20\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8085/api/v0/mail",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v0",
+										"mail"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "BackWeb",
+			"item": [
+				{
+					"name": "Reservas",
+					"item": [
+						{
+							"name": "W - Crear reserva",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoidXNlckB1c2VyLmVzIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY1MzI5MjUxOCwiZXhwIjoxNjUzMjk0MzE4fQ.w3kqx0l4oGYDqcYWHKkjyKP4GsNUMEMKdB-suHpCa1rfeKv188PsMmLoeCajAA-cVBibkTZN9DtTuE9XwI7yUQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"city\": \"Valencia\",\r\n    \"name\": \"David\",\r\n    \"surname\": \"Cueto\",\r\n    \"phone\": \"123456789\",\r\n    \"email\": \"davidcueto.dev@gmail.com\",\r\n    \"date\": \"2022-05-23\",\r\n    \"hour\": 20\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8085/api/v0/booking",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v0",
+										"booking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "W - Ver reservas con condiciones",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoidXNlckB1c2VyLmVzIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY1MzI4NzAwMCwiZXhwIjoxNjUzMjg4ODAwfQ.UthJMX-E1ndIueS2UL2N6AinbrcRcwpopBDMQpOZR8sZ1ta0mcCBwRKMX_3YnKxWMU-zFsgKKKgNDpbR9WGKOA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8086/api/v0/booking/Valencia?lowerDate=2022-03-10",
+									"host": [
+										"localhost"
+									],
+									"port": "8086",
+									"path": [
+										"api",
+										"v0",
+										"booking",
+										"Valencia"
+									],
+									"query": [
+										{
+											"key": "lowerDate",
+											"value": "2022-03-10",
+											"description": "Muestra los autobuses que están por encima de esta fecha"
+										},
+										{
+											"key": "upperDate",
+											"value": "2022-12-20",
+											"description": "Muestra los autobuses que están por debajo de esta fecha",
+											"disabled": true
+										},
+										{
+											"key": "lowerHour",
+											"value": "8",
+											"description": "Muestra los autobuses que están por encima de esta hora",
+											"disabled": true
+										},
+										{
+											"key": "upperHour",
+											"value": "20",
+											"description": "Muestra los autobuses que están por debajo de esta hora",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Autobuses",
+					"item": [
+						{
+							"name": "W - Ver autobuses disponibles según parámetros de fecha y hora",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoidXNlckB1c2VyLmVzIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY1MzI4NzAwMCwiZXhwIjoxNjUzMjg4ODAwfQ.UthJMX-E1ndIueS2UL2N6AinbrcRcwpopBDMQpOZR8sZ1ta0mcCBwRKMX_3YnKxWMU-zFsgKKKgNDpbR9WGKOA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8086/api/v0/bus/available/Valencia?lowerDate=2022-04-01",
+									"host": [
+										"localhost"
+									],
+									"port": "8086",
+									"path": [
+										"api",
+										"v0",
+										"bus",
+										"available",
+										"Valencia"
+									],
+									"query": [
+										{
+											"key": "lowerDate",
+											"value": "2022-04-01",
+											"description": "Muestra los autobuses que están por encima de esta fecha"
+										},
+										{
+											"key": "upperDate",
+											"value": "2022-09-01",
+											"description": "Muestra los autobuses que están por debajo de esta fecha",
+											"disabled": true
+										},
+										{
+											"key": "lowerHour",
+											"value": "18",
+											"description": "Muestra los autobuses que están por encima de esta hora",
+											"disabled": true
+										},
+										{
+											"key": "upperHour",
+											"value": "18",
+											"description": "Muestra los autobuses que están por debajo de esta hora",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
