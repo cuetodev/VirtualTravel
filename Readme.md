@@ -34,7 +34,7 @@ Importante tener instalado / actualizado lo siguiente:
 1. Primero hacemos un clone del repositorio
 
 ```
-git clone https://github.com/cuetodev/FormacionNXT-Backend/tree/master/EFinal_Cloud
+git clone https://github.com/cuetodev/VirtualTravel.git
 ```
 
 2. Después inicializamos el docker compose yéndonos a la ruta del proyecto desde un CMD:
@@ -242,4 +242,4 @@ Es importante saber que todos los endpoints llevan seguridad, es decir, sin un t
   <a href="https://www.twitter.com/davidcueto_dev"><img src="https://img.shields.io/badge/Twitter-blue?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter Badge"></a>
 </p>
 
-* Link del proyecto: https://github.com/cuetodev/FormacionNXT-Backend/tree/master/EFinal_Cloud
+* Link del proyecto: https://github.com/cuetodev/VirtualTravel
