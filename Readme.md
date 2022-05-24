@@ -22,7 +22,7 @@ Librerías usadas de interés
 <!-- GETTING STARTED -->
 ## Empezando
 
-### Prerequisitos
+### Prerrequisitos
 
 Importante tener instalado / actualizado lo siguiente:
 * Docker
