@@ -95,6 +95,8 @@ Es importante saber que todos los endpoints llevan seguridad, es decir, sin un t
 }
 ```
 
+`¿Cómo funciona?:` A la hora de hacer una reserva yo primero compruebo si existe un autobús con las características que quiero para la reserva, de lo contrario, creo el autobús totalmente transparente al usuario y asigno la reserva al autobús. Si el autobús existe entonces simplemente asigno la reserva al autobús.
+
 ---
 
 #### Listado de reservas - (Empresa y Web)
